@@ -1,6 +1,8 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
+    private static final ArrayList<String> taskList = new ArrayList<String>();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -17,13 +19,17 @@ public class Duke {
             String input = sc.nextLine();
 
             switch(input) {
-                case "bye":
-                    printExitMessage();
-                    return;
+            case "bye":
+                printExitMessage();
+                return;
 
-                default:
-                    printDefaultMessage(input.toLowerCase());
-                    break;
+            case "list":
+                printListMessage();
+                break;
+
+            default:
+                printAddMessage(input.toLowerCase());
+                break;
             }
         }
     }
@@ -42,8 +48,22 @@ public class Duke {
     }
 
 
-    public static void printDefaultMessage(String input) {
-        addBorder(input);
+    public static void printAddMessage(String input) {
+        addBorder("added: " + input);
+        taskList.add(input);
+    }
+
+    public static void printListMessage() {
+        String output = "";
+        int taskListLen = taskList.size();
+        for (int i = 0; i < taskListLen; i ++) {
+            if (i == 0) {
+                output += i + 1 + ". " + taskList.get(i);
+            } else {
+                output += "\n" + i + 1 + ". " + taskList.get(i);
+            }
+        }
+        addBorder(output);
     }
 
     public static void printExitMessage() {
