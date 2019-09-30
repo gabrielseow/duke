@@ -65,7 +65,6 @@ public class Parser {
 
     public static int parseDoneCommand(String[] newTaskSplit) {
         int completedTaskNum = Integer.parseInt(newTaskSplit[1]) - 1;
-        assert completedTaskNum > 0;
         return completedTaskNum;
     }
 
@@ -77,7 +76,8 @@ public class Parser {
             throw new DukeDeleteIllegalArgumentException("You have entered too many arguments for deletion");
         } else {
             try {
-                return Integer.parseInt(newTaskSplit[1]) - 1;
+                int deletionNum = Integer.parseInt(newTaskSplit[1]) - 1;
+                return deletionNum;
             } catch (NumberFormatException e) {
                 throw new DukeDeleteIllegalArgumentException("Please enter a valid number for deletion");
             } catch (IndexOutOfBoundsException e) {
@@ -156,7 +156,8 @@ public class Parser {
             }
             if (foundEvent) {
                 DateTime eventTime = convertDateTime(eventTimeString);
-                return new Event(description, eventTime);
+                Event newEvent = new Event(description, eventTime);
+                return newEvent;
             } else {
                 throw new DukeEventIllegalArgumentException("event timing");
             }
@@ -168,7 +169,8 @@ public class Parser {
     private static String parseFindCommand(String[] newTaskSplit) throws DukeFindIllegalArgumentException {
         int newTaskLen = newTaskSplit.length;
         if (newTaskLen == 2) {
-            return newTaskSplit[1];
+            String keyword = newTaskSplit[1];
+            return keyword;
         } else if (newTaskLen > 2) {
             throw new DukeFindIllegalArgumentException("too many");
         } else {
@@ -177,7 +179,6 @@ public class Parser {
     }
 
     public static ArrayList<Task> findTasksByKeyword(String keyword, ArrayList<Task> taskArrayList) {
-        assert keyword.length() > 0;
         ArrayList<Task> searchResultArrayList = new ArrayList<Task>();
         for (Task task : taskArrayList) {
             String[] descriptionSplit = task.getDescription().split(" ");
@@ -196,7 +197,6 @@ public class Parser {
     }
 
     private static DateTime convertDateTime(String dateTimeString) {
-        assert dateTimeString.length() > 0;
         String[] dateTimeStringSplit = dateTimeString.split(" ");
         String[] dateStringSplit = dateTimeStringSplit[0].split("/");
         int day = Integer.parseInt(dateStringSplit[0]);

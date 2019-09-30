@@ -6,7 +6,7 @@ import duke.ui.Ui;
 import duke.storage.Storage;
 
 public class AddCommand extends Command {
-    Task newTask;
+    private Task newTask;
 
     public AddCommand(Task newTask) {
         this.newTask = newTask;
