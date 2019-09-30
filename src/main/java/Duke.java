@@ -1,8 +1,9 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
 
-    private static Task[] tasks = new Task[100];
+    private static ArrayList<Task> tasks = new ArrayList<Task>();
     private static int tasksCount = 0;
 
     public static void main(String[] args) throws DukeException{
@@ -31,7 +32,7 @@ public class Duke {
                 return;
             case "done":
                 int completedTaskNum = Integer.parseInt(newTaskSplit[1]) - 1;
-                Task completedTask = tasks[completedTaskNum];
+                Task completedTask = tasks.get(completedTaskNum);
                 printAndEvaluateTaskDone(completedTask);
                 break;
             case "event":
@@ -56,6 +57,12 @@ public class Duke {
                     addToDo(newToDo);
                 } catch (DukeException e) {
                     addBorder(e.getMessage());
+                }
+                break;
+            case "delete":
+                Integer index = parseAndEvaluateDelete(newTaskSplit);
+                if (index != null) {
+                    deleteTask(index);
                 }
                 break;
             default:
@@ -83,16 +90,23 @@ public class Duke {
         addBorder("Bye. Hope to see you again soon!");
     }
 
-    //Old unused method for adding generic tasks
-    /*
-    static void addTask(String newTaskLine) {
-        Task newTask = new Task(newTaskLine);
-        tasks[tasksCount] = newTask;
-        String output = "added: " + newTask.toString();
-        addBorder(output);
-        tasksCount++;
+    static Integer parseAndEvaluateDelete(String[] newTaskSplit) {
+        return Integer.parseInt(newTaskSplit[1]);
     }
-    */
+
+    static void deleteTask(int index) {
+        if (index >= 1 && index <= tasksCount) {
+            tasksCount --;
+            Task removedTask = tasks.get(index - 1);
+            String output = "Noted. I've removed this task:\n" +
+                    removedTask.toString() + "\n" +
+                    "Now you have " +
+                    tasksCount +
+                    " tasks in the list.";
+            addBorder(output);
+        }
+    }
+
     static ToDo parseAndEvaluateToDo(String[] newTaskSplit) throws DukeException {
         try {
             int newTaskLen = newTaskSplit.length;
@@ -106,7 +120,7 @@ public class Duke {
         }
     }
     static void addToDo(ToDo newToDo) {
-        tasks[tasksCount] = newToDo;
+        tasks.add(newToDo);
         tasksCount++;
         String output = "Got it. I've added this task:\n"
                 + newToDo.toString()
@@ -146,7 +160,7 @@ public class Duke {
     }
 
     static void addDeadline(Deadline newDeadline) {
-        tasks[tasksCount] = newDeadline;
+        tasks.add(newDeadline);
         tasksCount++;
         String output = "Got it. I've added this task:\n"
                 + newDeadline.toString()
@@ -186,7 +200,7 @@ public class Duke {
     }
 
     static void addEvent(Event newEvent) {
-        tasks[tasksCount] = newEvent;
+        tasks.add(newEvent);
         tasksCount++;
         String output = "Got it. I've added this task:\n"
                 + newEvent.toString()
@@ -198,7 +212,7 @@ public class Duke {
         String str = "";
 
         for (int i = 1; i < tasksCount + 1; i++) {
-            String newTask = tasks[i-1].toString();
+            String newTask = tasks.get(i-1).toString();
             if (i == tasksCount) {
                 str += i + ". " + newTask;
             } else {
