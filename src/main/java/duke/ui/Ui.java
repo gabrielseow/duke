@@ -26,25 +26,22 @@ public class Ui {
         output = "Noted. I've removed this task: \n"
                 + taskDescription
                 + "\nNow you have " + listSize + " tasks in the list.";
-        //System.out.println(output);
     }
 
     public void showDoneMessage(String taskDescription) {
-        //System.out.println("Nice! I've marked this task as done: \n" + taskDescription);
         output = "Nice! I've marked this task as done: \n" + taskDescription;
     }
 
     public void showList(String[] taskDescriptionArray) {
         int taskLen = taskDescriptionArray.length;
         if (taskLen == 0) {
-            System.out.println("You do not have any tasks in your list");
+            output = "You do not have any tasks in your list";
         } else {
             output = "Here are the tasks in your list: ";
             for (int i = 0; i < taskLen; i ++) {
                 String taskDescription = taskDescriptionArray[i];
                 output += "\n" + (i + 1) + "." + taskDescription;
             }
-            //System.out.println(output);
         }
     }
 
@@ -58,10 +55,11 @@ public class Ui {
                 String taskDescription = taskDescriptionArray[i];
                 output += "\n" + (i + 1) + "." + taskDescription;
             }
-            //System.out.println(output);
         }
     }
 
+    //Old Welcome Message
+    /*
     public void showWelcome() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -75,17 +73,21 @@ public class Ui {
         output += welcomeMessage;
         output += getLine();
     }
+    */
 
-    public void showLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    private String getLine() {
-        return "____________________________________________________________";
+    public void showHelpMessage() {
+        output = "Welcome to Duke. The following are a list of possible commands: \n" +
+                "todo <description> --- Creates a ToDo task\n\n" +
+                "deadline <description> /by <dd/mm/yy hhmm> --- Creates a Deadline task\n\n" +
+                "event <description> /at <dd/mm/yy hhmm> --- Creates an Event task\n\n" +
+                "list --- Lists all tasks\n\n" +
+                "done <task number> --- Mark a task as completed\n\n" +
+                "delete <task number> --- Delete a task\n\n" +
+                "help --- Display the help menu\n\n" +
+                "bye --- Exit Duke\n";
     }
 
     public void showLoadingError() {
-        //Consider making DukeLoadingError
         output = "No save file found... creating new save file";
     }
 

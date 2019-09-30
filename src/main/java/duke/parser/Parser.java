@@ -14,6 +14,7 @@ import duke.command.DoneCommand;
 import duke.command.ExitCommand;
 import duke.command.ListCommand;
 import duke.command.FindCommand;
+import duke.command.HelpCommand;
 import duke.dukeexception.DukeException;
 import duke.dukeexception.DukeIllegalArgumentException;
 import duke.dukeexception.DukeToDoIllegalArgumentException;
@@ -55,6 +56,8 @@ public class Parser {
         case "find":
             String keyword = parseFindCommand(newTaskSplit);
             return new FindCommand(keyword);
+        case "help":
+            return new HelpCommand();
         default:
             throw new DukeIllegalArgumentException();
         }
@@ -193,7 +196,7 @@ public class Parser {
         return searchResultArrayList;
     }
 
-    public static DateTime convertDateTime(String dateTimeString) {
+    private static DateTime convertDateTime(String dateTimeString) {
         String[] dateTimeStringSplit = dateTimeString.split(" ");
         String[] dateStringSplit = dateTimeStringSplit[0].split("/");
         int day = Integer.parseInt(dateStringSplit[0]);
@@ -206,9 +209,7 @@ public class Parser {
     public static Task parseSaveData(String newTaskString) throws DukeSaveFileCorruptedError {
         String[] newTaskSplit = newTaskString.split(" \\| ");
         String taskType = newTaskSplit[0];
-        boolean taskIsDone = Integer.parseInt(newTaskSplit[1]) == 1
-                ? true
-                : false;
+        boolean taskIsDone = Integer.parseInt(newTaskSplit[1]) == 1;
         String description = newTaskSplit[2];
         Task newTask;
         switch(taskType) {
@@ -226,13 +227,9 @@ public class Parser {
         default:
             throw new DukeSaveFileCorruptedError();
         }
-        if (newTask != null) {
-            if (taskIsDone) {
-                newTask.taskComplete();
-            }
-            return newTask;
-        } else  {
-            throw new DukeSaveFileCorruptedError();
+        if (taskIsDone) {
+            newTask.taskComplete();
         }
+        return newTask;
     }
 }

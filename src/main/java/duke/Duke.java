@@ -7,13 +7,6 @@ import duke.dukeexception.DukeException;
 import duke.command.Command;
 import duke.parser.Parser;
 
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.scene.image.Image;
-
 /**
  * duke.view.Main driver class for Duke application. Duke application helps the user to manage tasks and allows the user to
  * add, remove, mark a task as completed, list all tasks and find all tasks containing a keyword.
@@ -22,14 +15,6 @@ public class Duke {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
-
-    private ScrollPane scrollPane;
-    private VBox dialogContainer;
-    private TextField userInput;
-    private Button sendButton;
-    private Scene scene;
-    private Image user = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image duke = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
     private static final String SAVE_DIRECTORY =
             "C:/Users/gbrls/OneDrive/Desktop/duke-master/src/main/java/duke/data/tasks.txt";
