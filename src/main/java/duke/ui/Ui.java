@@ -1,25 +1,13 @@
 package duke.ui;
 
-import java.util.Scanner;
-
 public class Ui {
 
-    private Scanner sc;
     private String output;
-
-    public Ui() {
-        sc = new Scanner(System.in);
-    }
-
-    public String readCommand() {
-        return sc.nextLine();
-    }
 
     public void showAddTaskMessage(String taskDescription, int listSize) {
         output = "Got it. I've added this task:\n"
                 + taskDescription
                 + "\nNow you have " + listSize + " tasks in the list.";
-        //System.out.println(output);
     }
 
     public void showDeleteTaskMessage(String taskDescription, int listSize) {
@@ -48,7 +36,7 @@ public class Ui {
     public void showSearchResult(String[] taskDescriptionArray) {
         int taskLen = taskDescriptionArray.length;
         if (taskLen == 0) {
-            System.out.println("There are no matching tasks in your list");
+            output = "There are no matching tasks in your list";
         } else {
             output = "Here are the matching tasks in your list: ";
             for (int i = 0; i < taskLen; i ++) {
