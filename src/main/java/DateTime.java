@@ -25,7 +25,7 @@ public class DateTime {
         } else {
             String formattedDay = "" + day;
             String formattedMonth = " of ";
-            String formattedYear = " " + 20 + year + ", ";
+            String formattedYear = " " + year + " ";
             String formattedTime = "";
             int rem = day % 10;
 
